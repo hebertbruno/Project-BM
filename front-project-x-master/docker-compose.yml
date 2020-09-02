@@ -1,0 +1,31 @@
+version: '2'
+services:
+
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    env_file:
+      - dev.env
+    ports:
+      - 9999:9999
+    volumes:
+      - .:/home/node/code
+    links:
+      - mongofront
+    networks:
+      - default
+      - apiprojectx_default
+  mongofront:
+    image: mongo:3
+    volumes:
+      - mongodatafront:/data/db
+    ports:
+      - 27019:27017
+
+volumes:
+  mongodatafront:
+
+networks:
+  apiprojectx_default:
+    external: true
